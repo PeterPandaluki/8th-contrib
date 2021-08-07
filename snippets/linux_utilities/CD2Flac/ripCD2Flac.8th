@@ -1,0 +1,27 @@
+#! /usr/bin/env 8th
+\ vim: ft=8th :
+-1 var, returncode
+
+
+\ The results from the command:
+"NOTHING" var, results
+
+\ Callback when the external command is finished.  
+: shell_callback
+  results !
+  returncode !
+  results @ . cr
+	\ Continue
+	t:main t:notify ;
+
+: app:main
+
+		\ Launch the shell command:
+    "abcde -o 'flac:-8' -G" ' shell_callback sh$
+				
+	\ wait until the command finishes
+	-1 sleep
+
+  "Results:" . cr
+  "return code: " . returncode @ . cr
+	bye ;
